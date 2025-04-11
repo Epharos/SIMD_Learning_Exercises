@@ -7,7 +7,7 @@
 
 </div>
 
-# SIMD Exercises
+# About this repository
 
 This repository holds every exercises I made while learning about SIMD (Single Instruction, Multiple Data).
 
@@ -17,19 +17,23 @@ This is not a project as such but more of a showcase of what I worked on in orde
 
 This repository was built using
 
-![cpp-shield] ![vs-shield]
+- ![cpp-shield] 
+- ![vs-shield]
+- [stb_image(_write)](https://github.com/nothings/stb)
 
-# Exercises summary
+## Exercises summary
 
 Each exercise is contained within its own subfolder of `src`. They all have their own `README.md` to explain the exercise deeper and display how I solved it.
 
 In order to make the navigation better here is a quick summary of those said exercises :
 
-## Load and Save
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Load and Save
 
 *Load and Save* is the very first exercise I did. The goal was to get familiar with `_mm_load_ps` and `_mm_store_ps` functions and understand the basics of SIMD.
 
-## Basic Arithmetics
+### Basic Arithmetics
 
 *Basic Arithmetics* was a necessity of SIMD. It introduces how `_mm_add_ps` (addition), `_mm_mul_ps` (multiplication), ... and others arithmetical operations were handled using SIMD and vectorized operations. 
 
@@ -43,24 +47,70 @@ In order to make the navigation better here is a quick summary of those said exe
 
 All of these were tested on floats (32 bits) and integers (32 bits). -->
 
-## Dot Product
+### Dot Product
 
 I feel like this one is an obvious exercise in order to really understand the power of SIMD. *Dot product* is, as the name implies, the dot product of two four-dimensional vectors. It's the first practical use of previously seen operations and the introduction of `_mm_hadd_ps` and `_mm_dp_ps`.
 
-## Min Max
+### Min Max
 
 *MinMax* introduces new intrinsics such as `_mm_min_ps`, `_mm_max_ps` and the `_mm_set1_ps` macro in order to look for the min and max values in an array of values.
 
-## MatMulVec
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### MatMulVec
 
 Behind that weird name, the goal of that exercise was to use previously seen functions to multiply a 4x4 matrix with a 4-dimensionnal vector. I used that exercice to introduce myself to AVX syntax and way of thinking (since my CPU is compatible), but it also introduces to `_mm256_set_m128` macro and masks (with `_mm256_dp_ps`).
 
-## Matrix
+### Matrix
 
 The *Matrix* exercise is a necessity to truly understand how powerful SIMD is if you know how to use it properly. The goal is to perform a multiplication between two 4x4 matrices.
 
 I used that exercise to improve my understanding of AVX and leverage the 256 bits registers by batching matrices in order to process 8 of them at a time, which proved to process in just 1/9th of the time it took the scalar version.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Getting Started
+
+This repository is not supposed to be cloned or even downloaded as it is simply a showcase. But in the case you still want to run it on your computer here is how.
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/Epharos/SIMD.git
+   ```
+2. Change git remote url to avoid accidental pushes to base project
+   ```sh
+   git remote set-url origin github_username/repo_name
+   git remote -v # confirm the changes
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## License
+
+Distributed under the Unlicense License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Contact
+
+REY Aurélien - [Website](http://www.epharos.fr/) - [Linked In][linkedin-url] - aur.rey30@gmail.com
+
+Project Link: [https://github.com/Epharos/SIMD](https://github.com/Epharos/SIMD)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Acknowledgments
+
+* [Loic LE FEUVRE](https://www.linkedin.com/in/loic-le-feuvre/) - For the teaching of the good programming practices
+* [othneildrew](https://github.com/othneildrew/Best-README-Template) - For the great README template
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
