@@ -78,7 +78,7 @@ This repository is not supposed to be cloned or even downloaded as it is simply 
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Epharos/SIMD.git
+   git clone https://github.com/Epharos/SIMD_Learning_Exercises.git
    ```
 2. Change git remote url to avoid accidental pushes to base project
    ```sh
