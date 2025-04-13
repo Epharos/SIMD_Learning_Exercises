@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../pch.hpp"
+#include "../Exercise.hpp"
 
-class LoadAndSave
+class LoadAndSave : public Exercise
 {
 protected:
 	const size_t arraySize;
@@ -10,5 +11,8 @@ protected:
 public:
 	LoadAndSave(size_t _arraySize = 4) : arraySize(_arraySize) {}
 
-	void Do();
+	void ProcessAll();
+	double ProcessScalar();
+	double ProcessSSE();
+	double ProcessAVX();
 };

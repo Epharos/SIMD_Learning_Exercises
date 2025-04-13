@@ -2,9 +2,13 @@
 //#include "pch.hpp"
 #include "BasicArithmetic.hpp"
 
-void BasicArithmetic::Do()
+void BasicArithmetic::ProcessAll()
 {
 	std::cout << "Basic Arithmetic with floats" << std::endl << "-------" << std::endl;
+
+	double scalar = 0.0f;
+	double sse = 0.0f;
+	double avx = 0.0f;
 
 #pragma region FLOATS
 
@@ -19,14 +23,15 @@ void BasicArithmetic::Do()
 
 	float* c = new float[arraySize];
 
-	Profiler* profiler = new Profiler("Addition (iterative)");
+#pragma region ADD
+	Profiler* profiler = new Profiler("Addition (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		c[i] = a[i] + b[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Addition (SIMD 128b)");
+	profiler = new Profiler("Addition (SSE)", &sse);
 	size_t realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -34,7 +39,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Addition (SIMD 256b)");
+	profiler = new Profiler("Addition (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -44,14 +49,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Subtraction (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Subtraction (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		c[i] = a[i] - b[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Subtraction (SIMD 128b)");
+	profiler = new Profiler("Subtraction (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -59,7 +69,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Subtraction (SIMD 256b)");
+	profiler = new Profiler("Subtraction (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -69,14 +79,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Multiplication (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Multiplication (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		c[i] = a[i] * b[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Multiplication (SIMD 128b)");
+	profiler = new Profiler("Multiplication (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -84,7 +99,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Multiplication (SIMD 256b)");
+	profiler = new Profiler("Multiplication (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -94,14 +109,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Division (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Division (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		c[i] = a[i] / b[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Division (SIMD 128b)");
+	profiler = new Profiler("Division (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -109,7 +129,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Division (SIMD 256b)");
+	profiler = new Profiler("Division (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -119,14 +139,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Square Root (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Square Root (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		c[i] = sqrtf(a[i]);
 	}
 	delete profiler;
 
-	profiler = new Profiler("Square Root (SIMD 128b)");
+	profiler = new Profiler("Square Root (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -134,7 +159,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Square Root (SIMD 256b)");
+	profiler = new Profiler("Square Root (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -144,14 +169,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Reciprocal (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Reciprocal (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		c[i] = 1.0f / a[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Reciprocal (SIMD 128b)");
+	profiler = new Profiler("Reciprocal (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -159,7 +189,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Reciprocal (SIMD 256b)");
+	profiler = new Profiler("Reciprocal (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -169,14 +199,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Reciprocal Square Root (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Reciprocal Square Root (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		c[i] = 1.0f / sqrtf(a[i]);
 	}
 	delete profiler;
 
-	profiler = new Profiler("Reciprocal Square Root (SIMD 128b)");
+	profiler = new Profiler("Reciprocal Square Root (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -184,13 +219,20 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Reciprocal Square Root (SIMD 256b)");
+	profiler = new Profiler("Reciprocal Square Root (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
 		_mm256_store_ps(&c[i * 8], _mm256_rsqrt_ps(_mm256_load_ps(&a[i * 8])));
 	}
 	delete profiler;
+
+	std::cout << std::endl;
+
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << std::endl;
 
 	std::cout << "-------" << std::endl;
 
@@ -213,14 +255,14 @@ void BasicArithmetic::Do()
 
 	int* ci = new int[arraySize];
 
-	profiler = new Profiler("Addition (iterative)");
+	profiler = new Profiler("Addition (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		ci[i] = ai[i] + bi[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Addition (SIMD 128b)");
+	profiler = new Profiler("Addition (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -228,7 +270,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Addition (SIMD 256b)");
+	profiler = new Profiler("Addition (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -238,14 +280,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Subtraction (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Subtraction (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		ci[i] = ai[i] - bi[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Subtraction (SIMD 128b)");
+	profiler = new Profiler("Subtraction (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -253,7 +300,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Subtraction (SIMD 256b)");
+	profiler = new Profiler("Subtraction (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -263,14 +310,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Multiplication (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Multiplication (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		ci[i] = ai[i] * bi[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Multiplication (SIMD 128b)");
+	profiler = new Profiler("Multiplication (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -278,7 +330,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Multiplication (SIMD 256b)");
+	profiler = new Profiler("Multiplication (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -288,14 +340,19 @@ void BasicArithmetic::Do()
 
 	std::cout << std::endl;
 
-	profiler = new Profiler("Division (iterative)");
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
+
+	std::cout << "---" << std::endl;
+
+	profiler = new Profiler("Division (Scalar)", &scalar);
 	for (int i = 0; i < arraySize; ++i)
 	{
 		ci[i] = ai[i] / bi[i];
 	}
 	delete profiler;
 
-	profiler = new Profiler("Division (SIMD 128b)");
+	profiler = new Profiler("Division (SSE)", &sse);
 	realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -303,7 +360,7 @@ void BasicArithmetic::Do()
 	}
 	delete profiler;
 
-	profiler = new Profiler("Division (SIMD 256b)");
+	profiler = new Profiler("Division (AVX)", &avx);
 	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 	for (size_t i = 0; i < realArraySize; ++i)
 	{
@@ -312,5 +369,26 @@ void BasicArithmetic::Do()
 	delete profiler;
 
 	std::cout << std::endl;
+
+	std::cout << "SSE is " << 100.f - (sse / scalar) * 100 << "% faster than Scalar" << std::endl;
+	std::cout << "AVX is " << 100.f - (avx / scalar) * 100 << "% faster than Scalar" << std::endl;
 #pragma endregion
+}
+
+double BasicArithmetic::ProcessScalar()
+{
+	throw std::runtime_error("Use ProcessAll instead");
+	return -1.0;
+}
+
+double BasicArithmetic::ProcessSSE()
+{
+	throw std::runtime_error("Use ProcessAll instead");
+	return -1.0;
+}
+
+double BasicArithmetic::ProcessAVX()
+{
+	throw std::runtime_error("Use ProcessAll instead");
+	return -1.0;
 }

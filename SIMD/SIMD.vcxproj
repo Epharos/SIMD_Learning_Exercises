@@ -149,8 +149,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\stb_image.h" />
+    <ClInclude Include="includes\stb_image_write.h" />
     <ClInclude Include="src\BasicArithmetic\BasicArithmetic.hpp" />
     <ClInclude Include="src\DotProduct\DotProduct.hpp" />
+    <ClInclude Include="src\Exercise.hpp" />
     <ClInclude Include="src\ImageProcessing\ImageProcessing.hpp" />
     <ClInclude Include="src\LoadAndSave\LoadAndSave.hpp" />
     <ClInclude Include="src\MatMulVec\MatrixMultiplyVector.hpp" />
@@ -158,6 +160,18 @@
     <ClInclude Include="src\Min_Max\Min_Max.hpp" />
     <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="src\Profiler.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\BasicArithmetic\README.md">
+      <SubType>
+      </SubType>
+    </None>
+    <None Include="src\DotProduct\README.md" />
+    <None Include="src\ImageProcessing\README.md" />
+    <None Include="src\LoadAndSave\README.md" />
+    <None Include="src\MatMulVec\README.md" />
+    <None Include="src\Matrix\README.md" />
+    <None Include="src\Min_Max\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

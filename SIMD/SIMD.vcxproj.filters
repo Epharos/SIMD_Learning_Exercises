@@ -74,5 +74,20 @@
     <ClInclude Include="src\ImageProcessing\ImageProcessing.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="src\Exercise.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\stb_image_write.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\BasicArithmetic\README.md" />
+    <None Include="src\DotProduct\README.md" />
+    <None Include="src\LoadAndSave\README.md" />
+    <None Include="src\MatMulVec\README.md" />
+    <None Include="src\Matrix\README.md" />
+    <None Include="src\Min_Max\README.md" />
+    <None Include="src\ImageProcessing\README.md" />
   </ItemGroup>
 </Project>

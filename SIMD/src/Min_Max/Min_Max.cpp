@@ -2,16 +2,28 @@
 //#include "pch.hpp" 
 #include "Min_Max.hpp"
 
-void MinMax::Do()
+void MinMax::ProcessAll()
+{
+	double scalarTiming = ProcessScalar();
+	double sseTiming = ProcessSSE();
+	double avxTiming = ProcessAVX();
+
+	std::cout << "SSE is " << 100. - (sseTiming / scalarTiming) * 100. << " % faster than scalar" << std::endl;
+	std::cout << "AVX is " << 100. - (avxTiming / scalarTiming) * 100. << " % faster than scalar" << std::endl;
+}
+
+double MinMax::ProcessScalar()
 {
 	float* a = new float[arraySize];
 
 	for (int i = 0; i < arraySize; ++i)
 	{
-		a[i] = rand();
+		a[i] = (float)rand();
 	}
 
-	Profiler* profiler = new Profiler("Process iterative");
+	double timing = 0.0;
+
+	Profiler* profiler = new Profiler("Min Max (Scalar)", &timing);
 	float min = a[0];
 	float max = a[0];
 	for (int i = 1; i < arraySize; ++i)
@@ -26,7 +38,23 @@ void MinMax::Do()
 	std::cout << "Min: " << min << std::endl;
 	std::cout << "Max: " << max << std::endl;
 
-	profiler = new Profiler("Process SIMD 128b");
+	delete[] a;
+
+	return timing;
+}
+
+double MinMax::ProcessSSE()
+{
+	float* a = new float[arraySize];
+
+	for (int i = 0; i < arraySize; ++i)
+	{
+		a[i] = (float)rand();
+	}
+
+	double timing = 0.0;
+
+	Profiler* profiler = new Profiler("Min Max (SSE)", &timing);
 	size_t realArraySize = arraySize % 4 == 0 ? arraySize / 4 : arraySize / 4 + 1;
 
 	__m128 minVec = _mm_set1_ps(a[0]);
@@ -49,8 +77,24 @@ void MinMax::Do()
 	std::cout << "Min: " << minArray[0] << std::endl;
 	std::cout << "Max: " << maxArray[0] << std::endl;
 
-	profiler = new Profiler("Process SIMD 256b");
-	realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
+	delete[] a;
+
+	return timing;
+}
+
+double MinMax::ProcessAVX()
+{
+	float* a = new float[arraySize];
+
+	for (int i = 0; i < arraySize; ++i)
+	{
+		a[i] = (float)rand();
+	}
+
+	double timing = 0.0;
+
+	Profiler* profiler = new Profiler("Min Max (AVX)", &timing);
+	size_t realArraySize = arraySize % 8 == 0 ? arraySize / 8 : arraySize / 8 + 1;
 
 	__m256 minVec256 = _mm256_set1_ps(a[0]);
 	__m256 maxVec256 = _mm256_set1_ps(a[0]);
@@ -73,4 +117,6 @@ void MinMax::Do()
 	std::cout << "Max: " << maxArray256[0] << std::endl;
 
 	delete[] a;
+
+	return timing;
 }
